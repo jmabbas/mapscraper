@@ -1,0 +1,64 @@
+{
+  "name": "Daily Google Maps Store Scraper",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily 8am Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://scraper:3000/scrape-next",
+        "options": {
+          "timeout": 1200000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "id": "call-scraper",
+      "name": "Run Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nif (data.done) {\n  return [{ json: { message: data.message, totalCombos: data.totalCombos } }];\n}\nconst stores = data.stores || [];\nreturn stores.map(store => ({ json: store }));"
+      },
+      "id": "split-stores",
+      "name": "Split Stores",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    }
+  ],
+  "connections": {
+    "Daily 8am Trigger": {
+      "main": [[{ "node": "Run Scraper", "type": "main", "index": 0 }]]
+    },
+    "Run Scraper": {
+      "main": [[{ "node": "Split Stores", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

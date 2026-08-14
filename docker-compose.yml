@@ -1,0 +1,40 @@
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_SECURE_COOKIE=false
+      # Uncomment for basic auth on the n8n UI:
+      # - N8N_BASIC_AUTH_ACTIVE=true
+      # - N8N_BASIC_AUTH_USER=admin
+      # - N8N_BASIC_AUTH_PASSWORD=changeme
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - scraper
+
+  scraper:
+    build: ./scraper-service
+    container_name: gmaps-scraper
+    restart: unless-stopped
+    shm_size: '1gb'
+    environment:
+      - TARGET_PER_DAY=15
+      - BATCH_SIZE=2
+      - BATCH_PAUSE_MS=3000
+      - COMBOS_PER_DAY=2
+      - PER_COMBO_MAX_DURATION_MS=240000
+      - TOTAL_MAX_DURATION_MS=1080000
+      - COMBO_PAUSE_MS=5000
+    volumes:
+      - ./data:/usr/src/app/data:ro          # categories.json + cities.json (read-only)
+      - scraper_state:/usr/src/app/state     # persisted daily cursor (currentIndex)
+    # No ports published to the host -> only reachable from other
+    # containers on this compose network, e.g. http://scraper:3000
+
+volumes:
+  n8n_data:
+  scraper_state:
