@@ -23,6 +23,9 @@
       "parameters": {
         "method": "POST",
         "url": "http://scraper:3000/scrape-next",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"combos\": 3,\n  \"target\": 25\n}",
         "options": {
           "timeout": 1200000,
           "response": {

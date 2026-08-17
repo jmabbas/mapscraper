@@ -1,0 +1,36 @@
+{
+  "name": "mapscraper",
+  "version": "1.0.0",
+  "description": "Google Maps Store Scraper with category x city queue, rate-limiting safeguards, email extraction, and JSON/CSV output",
+  "main": "src/server.js",
+  "bin": {
+    "mapscraper": "./bin/mapscraper.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "server": "node src/server.js",
+    "scrape": "node bin/mapscraper.js run",
+    "status": "node bin/mapscraper.js status",
+    "reset": "node bin/mapscraper.js reset",
+    "single": "node bin/mapscraper.js single",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "google-maps",
+    "scraper",
+    "puppeteer",
+    "lead-generation",
+    "email-extractor",
+    "n8n"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "puppeteer": "^23.4.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}

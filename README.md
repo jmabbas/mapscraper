@@ -1,143 +1,205 @@
-# Daily Google Maps Store Scraper for n8n (category × city queue)
+# Google Maps Store & Lead Scraper
 
-Cycles through every category+city combination automatically, one combo per
-day, collecting up to 25 stores per combo — no manual URL editing needed.
+A robust, production-grade Google Maps scraper designed to cross-join business categories and cities, systematically collect store details (**name, address, website, email, and Google Maps URL**), and export structured data into both **JSON** and **CSV** spreadsheets.
 
-## How it works
-- `data/categories.json` + `data/cities.json` are cross-joined into a queue
-  of `city + category` combinations at startup (city is the outer loop, so
-  all categories for city 1 run before moving to city 2).
-- The scraper service tracks **which combo is next** in a small state file
-  (`currentIndex`), persisted in a Docker volume so it survives restarts.
-- Each day's n8n run calls `POST /scrape-next` — the service scrapes
-  **`COMBOS_PER_DAY` combos** (default 3) starting from the current pointer,
-  advancing it after each one completes. A combo is never repeated the next
-  day — the cursor only ever moves forward.
-- Within one combo, scraping happens in **batches of 5** (scroll → scrape 5 →
-  pause 3s → scrape next 5 …) up to 25 total, so a single request never tries
-  to hammer 20+ store/website pages back-to-back — this is what was causing
-  the earlier "Internal Server Error" (a request timeout under load, not an
-  actual crash). There's also a short pause between combos.
-- If a combo can't finish within its time budget, the service returns
-  whatever it collected (`complete: false`) and still advances to the next
-  combo rather than getting stuck. There's also an overall run-length cap
-  (`TOTAL_MAX_DURATION_MS`, default 18 min) — if it's hit mid-run, the
-  service stops before starting another combo; whatever wasn't reached that
-  day just runs on the next trigger.
+Built with rate-limiting safeguards, batch pacing, Google CAPTCHA/block detection, sequential tab reuse, and stateful cursor persistence.
+
+---
+
+## Features
+
+- **Category × City Queue**: Cross-joins input lists (`categories.json` × `cities.json`, 17 × 101 = 1,717 combinations) with city as the outer loop.
+- **Stateful Cursor Persistence**: Automatically tracks progress across runs in `data/state.json`. Safe for append-only additions to input lists.
+- **Active Block & CAPTCHA Detection**: Halts the run immediately upon encountering Google's "unusual traffic" / CAPTCHA warnings, surfaces `blocked: true`, and retains the cursor so blocked combinations are retried rather than skipped.
+- **Batch Pacing & Time-Boxing**:
+  - Batched processing (e.g. 5 stores per batch with 3s pause)
+  - Pacing between combinations (5s pause)
+  - Per-combination time budget (4 min cutoff) and per-run time budget (18 min cutoff)
+- **DOM-Based Resilient Scraping**: Uses `div[role="feed"]` direct scrolling, primary `a.hfpxzc` selector with semantic fallback `a[href*="/maps/place/"]`, and URL deduplication.
+- **Deep Email Extraction**: Visits store websites sequentially with resource blocking (aborts images/fonts/media for high throughput), searches `mailto:` links, applies regex scanning across page text, strips trailing punctuation, and filters out asset noise.
+- **Dual Export**: Generates timestamped run files (`output/runs/scrape_*.json`, `output/runs/scrape_*.csv`) and automatically appends to cumulative outputs (`output/results.json`, `output/results.csv`).
+- **Dual Execution Modes**:
+  1. **Standalone CLI** for local execution and manual triggers (`npm run scrape`, status, reset, single-combo search).
+  2. **Express HTTP Microservice** (`npm start`) with endpoints (`/scrape-next`, `/queue-status`, `/queue-reset`, `/scrape`) ready for n8n or Docker.
+
+---
+
+## Directory Structure
 
 ```
-Daily Trigger → HTTP Request (POST /scrape-next) → Split Stores
-                        │
-                        ▼
-     scraper container: queue + cursor + Puppeteer (N combos/run)
+mapscraper/
+├── bin/
+│   └── mapscraper.js              # Executable CLI binary
+├── input/
+│   ├── categories.json            # Business categories list
+│   └── cities.json                # Target cities list
+├── data/
+│   └── state.json                 # Persisted queue cursor & stats
+├── output/
+│   ├── results.json               # Cumulative JSON store database
+│   ├── results.csv                # Cumulative CSV spreadsheet
+│   └── runs/                      # Individual timestamped run exports
+├── src/
+│   ├── config.js                  # Central configuration
+│   ├── queue.js                   # Queue builder & cursor manager
+│   ├── browser.js                 # Puppeteer manager & stealth setup
+│   ├── mapsScraper.js             # Maps DOM search & place extractor
+│   ├── emailExtractor.js          # Website email regex & sanitizer
+│   ├── exporter.js                # RFC 4180 CSV & JSON writer
+│   ├── scraperEngine.js           # Core scraping orchestrator
+│   ├── cli.js                     # CLI command definitions
+│   └── server.js                  # Express API microservice
+├── test/                          # Unit & integration test suite
+├── Dockerfile                     # Container definition
+├── docker-compose.yml             # Scraper + n8n multi-container setup
+├── google-maps-scraper-workflow.json # Importable n8n workflow
+└── package.json
 ```
 
-With 17 categories × 101 cities = **1,717 combinations** and the default of
-3/day, a full cycle takes about **19 months**. Raise `COMBOS_PER_DAY` to go
-faster — see the rate-limiting note below before pushing it too high.
+---
 
-## Will Google rate-limit or block this?
-Being honest about the risk rather than promising it's safe:
+## Installation & Setup
 
-- **Yes, it can happen**, regardless of pace — this is unauthorized scraping
-  of Google Maps (against Google's Terms of Service), and Google doesn't
-  publish the exact thresholds that trigger a block. More combos per day
-  from the same IP does raise the odds of hitting a CAPTCHA wall or a
-  temporary block, but there's no "safe" number I can guarantee.
-- **What this setup already does to reduce risk:** batches of 5 with pauses,
-  a pause between combos, and a single long-lived browser session reused
-  across combos in one run (fewer cold launches) rather than firing requests
-  in parallel.
-- **New in this version — block detection:** before/during each combo, the
-  service checks the page for Google's "unusual traffic" / CAPTCHA wording.
-  If it sees that, it **stops the entire run immediately**, does **not**
-  advance past that combo (so it's retried, not skipped, next run), and
-  reports `blocked: true` in the response — instead of silently continuing
-  and returning garbage/empty data.
-- **Practical guidance:** start with the default `COMBOS_PER_DAY=3` and watch
-  a few days of runs for `blocked: true`. If you don't see it, you can raise
-  the number gradually. If you push it much higher (say, 10+/day) from a
-  single home/server IP, blocks become meaningfully more likely — at that
-  point the standard mitigation is rotating outbound IPs/proxies, which is a
-  bigger architecture change I can help with if you get there.
+### Prerequisites
+- Node.js 18+ (Node 20+ recommended)
+- npm 9+
 
-## Files
-- `data/categories.json`, `data/cities.json` — your reference lists (mounted
-  read-only into the container).
-- `scraper-service/server.js` — Express server: builds the queue, tracks the
-  daily cursor, does the batched Puppeteer scraping.
-- `scraper-service/package.json`, `scraper-service/Dockerfile` — the scraper
-  container, built from the official Puppeteer base image.
-- `docker-compose.yml` — runs `n8n` (untouched official image) + `scraper`,
-  with volumes for `./data` (your JSON lists) and a named volume for the
-  persisted cursor.
-- `google-maps-scraper-workflow.json` — importable n8n workflow: Daily
-  Trigger → HTTP Request → Split Stores. No Config node needed anymore — the
-  service decides what to scrape each day.
+### Install Dependencies
+```bash
+npm install
+```
 
-## Setup steps
+---
 
-1. Arrange the folder like this:
-   ```
-   gmaps-scraper/
-   ├── docker-compose.yml
-   ├── google-maps-scraper-workflow.json
-   ├── data/
-   │   ├── categories.json
-   │   └── cities.json
-   └── scraper-service/
-       ├── Dockerfile
-       ├── package.json
-       └── server.js
-   ```
+## CLI Usage
 
-2. Build and start:
+### 1. Run the Next Scheduled Combinations
+Scrapes the next N combinations (default: 3 combinations, 25 stores each) and advances the cursor:
+```bash
+npm run scrape
+# or with custom limits:
+node bin/mapscraper.js run --combos 3 --target 25
+```
+
+### 2. Inspect Queue Progress & Status
+```bash
+npm run status
+# or
+node bin/mapscraper.js status
+```
+Output:
+```
+===== Google Maps Scraper Queue Status =====
+Current Index:          1
+Total Combinations:     1717
+Completed Combinations: 1
+Remaining Combinations: 1716
+Progress:               0.06%
+Total Stores Scraped:   2
+Last Run At:            2026-08-16T17:45:55.800Z
+Last Completed Combo:   "Fashion & Apparel" in "New York"
+Next Combo to Run:      "Jewelry" in "New York"
+Next Combo URL:         https://www.google.com/maps/search/Jewelry+in+New+York/
+============================================
+```
+
+### 3. Reset Queue Cursor
+Reset progress back to the beginning (or a specific combo index):
+```bash
+npm run reset
+# or to a specific index:
+node bin/mapscraper.js reset --index 0
+```
+
+### 4. Ad-hoc Single Search (Without Advancing Queue)
+```bash
+node bin/mapscraper.js single --city "Austin" --category "Florist" --target 10
+```
+
+---
+
+## HTTP Microservice & Orchestration (n8n)
+
+### Start the Server
+```bash
+npm start
+# Service listening on port 3000
+```
+
+### API Endpoints
+
+#### 1. `POST /scrape-next`
+Triggers the next batch of combinations from the queue:
+```bash
+curl -X POST http://localhost:3000/scrape-next \
+  -H "Content-Type: application/json" \
+  -d '{"combos": 3, "target": 25}'
+```
+
+#### 2. `GET /queue-status`
+Returns status, completion percentage, and the next combination in line:
+```bash
+curl http://localhost:3000/queue-status
+```
+
+#### 3. `POST /queue-reset`
+Resets the queue cursor:
+```bash
+curl -X POST http://localhost:3000/queue-reset \
+  -H "Content-Type: application/json" \
+  -d '{"index": 0}'
+```
+
+#### 4. `POST /scrape`
+Ad-hoc single scrape:
+```bash
+curl -X POST http://localhost:3000/scrape \
+  -H "Content-Type: application/json" \
+  -d '{"city": "Chicago", "category": "Electronics", "target": 10}'
+```
+
+---
+
+## Docker & n8n Deployment
+
+1. Start both the scraper container and n8n:
    ```bash
    docker compose up -d --build
    ```
+2. Open n8n at `http://localhost:5678`.
+3. Import `google-maps-scraper-workflow.json` via **Workflows → Import from File**.
+4. Activate the daily 8am schedule trigger.
 
-3. Open n8n: `http://localhost:5678`
+---
 
-4. **Workflows → Import from File** → `google-maps-scraper-workflow.json`
+## Configuration Reference
 
-5. Test it: click **Execute Workflow**. Check **Split Stores** output — one
-   item per store, tagged with `city` and `category`:
-   `{ city, category, name, url, address, website, email, scrapedAt }`.
+All settings can be customized via `.env` or system environment variables:
 
-6. Toggle the workflow **Active** to run daily at 8am (edit the hour in the
-   **Daily 8am Trigger** node for a different time).
+| Variable | Default | Description |
+|---|---|---|
+| `COMBOS_PER_RUN` | `3` | Number of category+city combos to scrape per run |
+| `TARGET_PER_COMBO` | `25` | Max stores to collect per combination |
+| `BATCH_SIZE` | `5` | Stores processed per sub-batch |
+| `BATCH_PAUSE_MS` | `3000` | Milliseconds pause between sub-batches |
+| `COMBO_PAUSE_MS` | `5000` | Milliseconds pause between combinations |
+| `PER_COMBO_MAX_DURATION_MS` | `240000` | Max duration per combo before returning partial results (4 min) |
+| `TOTAL_MAX_DURATION_MS` | `1080000` | Max duration for an entire run (18 min) |
+| `HEADLESS` | `true` | Run browser in headless mode (`false` for visible debugging) |
+| `PORT` | `3000` | Microservice HTTP port |
+| `PROXY_SERVER` | `null` | Optional HTTP/SOCKS proxy (e.g. `http://proxy.example.com:8080`) |
 
-## Checking / resetting progress
-- **Where you are in the queue:**
-  ```bash
-  curl http://localhost:3000/queue-status
-  ```
-  (only reachable from inside the Docker network by default — from your
-  host, use `docker exec gmaps-scraper wget -qO- http://localhost:3000/queue-status`,
-  or temporarily publish port 3000 in `docker-compose.yml` for host access.)
-- **Jump to a specific combo / start over:**
-  ```bash
-  curl -X POST http://localhost:3000/queue-reset -H "Content-Type: application/json" -d '{"index": 0}'
-  ```
-  (same access note as above.)
+---
 
-## Tuning
-Environment variables on the `scraper` service in `docker-compose.yml`:
-- `TARGET_PER_DAY` (default 25) — stores collected per combo
-- `BATCH_SIZE` (default 5) — stores scraped per batch before pausing
-- `BATCH_PAUSE_MS` (default 3000) — pause between batches within a combo
-- `COMBOS_PER_DAY` (default 3) — how many city+category combos to process
-  per trigger
-- `COMBO_PAUSE_MS` (default 5000) — pause between combos in the same run
-- `PER_COMBO_MAX_DURATION_MS` (default 240000 / 4 min) — safety cutoff per
-  combo; returns partial results rather than hanging
-- `TOTAL_MAX_DURATION_MS` (default 1080000 / 18 min) — safety cutoff for the
-  whole run; if raising `COMBOS_PER_DAY`, raise this too (and the timeout in
-  the n8n HTTP Request node, currently 1,200,000 ms / 20 min)
+## Running Tests
 
-## Notes
-- Scraping Google Maps this way isn't officially sanctioned by Google — the
-  daily cap and batch pacing already keep volume modest. Expect occasional
-  breakage if Google changes its internal class names (e.g. `hfpxzc`).
-- If a combo's city/category returns very few real results (e.g. "Bike Shop"
-  in a small city), `count` will just be lower than 25 — that's expected.
+Run the built-in automated test suite:
+```bash
+npm test
+```
+
+Includes test suites for:
+- Queue cross-join & URL encoding logic (1,717 items)
+- Email extractor regex, sanitization, and invalid domain filtering
+- RFC 4180 compliant CSV formatting & dual JSON/CSV export
+- Google CAPTCHA / unusual traffic block detector
