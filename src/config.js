@@ -29,6 +29,7 @@ const config = {
   totalMaxDurationMs: parseInt(process.env.TOTAL_MAX_DURATION_MS || '1080000', 10),      // 18 minutes total per run
   pageTimeoutMs: parseInt(process.env.PAGE_TIMEOUT_MS || '30000', 10),                   // 30 seconds page load timeout
   websiteTimeoutMs: parseInt(process.env.WEBSITE_TIMEOUT_MS || '12000', 10),              // 12 seconds store website timeout
+  protocolTimeoutMs: parseInt(process.env.PROTOCOL_TIMEOUT_MS || '300000', 10),          // 5 minutes CDP protocol timeout
 
   // Browser configuration
   headless: process.env.HEADLESS !== 'false',

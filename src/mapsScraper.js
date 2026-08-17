@@ -51,8 +51,11 @@ class MapsScraper {
       });
     } catch (err) {
       // If nothing appeared, check if page has no results
-      const pageText = await page.evaluate(() => document.body ? document.body.innerText : '');
-      if (pageText.includes("Google Maps can't find") || pageText.includes("No results found")) {
+      const hasNoResults = await page.evaluate(() => {
+        const text = (document.body ? document.body.textContent : '') || '';
+        return text.includes("Google Maps can't find") || text.includes("No results found");
+      }).catch(() => false);
+      if (hasNoResults) {
         return [];
       }
     }
@@ -61,50 +64,50 @@ class MapsScraper {
     const isDirectPlace = await page.evaluate(() => {
       const h1 = document.querySelector('h1.DUwDvf, h1');
       const isPlaceUrl = window.location.href.includes('/maps/place/');
-      return isPlaceUrl && Boolean(h1 && h1.innerText.trim());
-    });
+      return Boolean(isPlaceUrl && h1 && (h1.textContent || h1.innerText || '').trim());
+    }).catch(() => false);
 
     if (isDirectPlace) {
       const directPlaceData = await page.evaluate(() => {
         const h1 = document.querySelector('h1.DUwDvf, h1');
         return {
-          name: h1 ? h1.innerText.trim() : 'Unknown Store',
+          name: h1 ? (h1.textContent || h1.innerText || '').trim() : 'Unknown Store',
           url: window.location.href,
         };
-      });
+      }).catch(() => ({ name: 'Unknown Store', url: page.url() }));
       return [directPlaceData];
     }
-
-    // Identify feed container or scrollable element
-    const feedExists = await page.$('div[role="feed"]');
-    const scrollSelector = feedExists ? 'div[role="feed"]' : 'div.m6QErb[aria-label]';
 
     const seenUrls = new Set();
     const collectedListings = [];
 
     const getListingsFromDOM = async () => {
-      return await page.evaluate(() => {
-        const results = [];
-        // Primary selector: a.hfpxzc
-        let anchors = Array.from(document.querySelectorAll('a.hfpxzc'));
+      try {
+        return await page.evaluate(() => {
+          const results = [];
+          // Primary selector: a.hfpxzc
+          let anchors = Array.from(document.querySelectorAll('a.hfpxzc'));
 
-        // Fallback selector: anchors with href containing /maps/place/
-        if (anchors.length === 0) {
-          anchors = Array.from(document.querySelectorAll('a[href*="/maps/place/"]'));
-        }
-
-        for (const a of anchors) {
-          const href = a.getAttribute('href');
-          const ariaLabel = a.getAttribute('aria-label') || '';
-          if (href && href.includes('/maps/place/')) {
-            results.push({
-              name: ariaLabel.trim() || 'Store',
-              url: href.startsWith('http') ? href : `https://www.google.com${href}`,
-            });
+          // Fallback selector: anchors with href containing /maps/place/
+          if (anchors.length === 0) {
+            anchors = Array.from(document.querySelectorAll('a[href*="/maps/place/"]'));
           }
-        }
-        return results;
-      });
+
+          for (const a of anchors) {
+            const href = a.getAttribute('href');
+            const ariaLabel = a.getAttribute('aria-label') || a.textContent || '';
+            if (href && href.includes('/maps/place/')) {
+              results.push({
+                name: ariaLabel.trim() || 'Store',
+                url: href.startsWith('http') ? href : `https://www.google.com${href}`,
+              });
+            }
+          }
+          return results;
+        });
+      } catch (err) {
+        return [];
+      }
     };
 
     let scrollAttempts = 0;
@@ -129,15 +132,17 @@ class MapsScraper {
         break;
       }
 
-      // Check if scroll reached end of list
+      // Check if scroll reached end of list without full page layout reflow
       const isEndOfList = await page.evaluate(() => {
-        const text = document.body ? document.body.innerText : '';
-        return (
-          text.includes("You've reached the end of the list") ||
-          text.includes("No more results") ||
-          Boolean(document.querySelector('div.HlvSq, p.fontBodyMedium > span > span'))
-        );
-      });
+        const endIndicator = document.querySelector('div.HlvSq, p.fontBodyMedium > span > span, span.HlvSq');
+        if (endIndicator) return true;
+        const feed = document.querySelector('div[role="feed"]');
+        if (feed) {
+          const text = feed.textContent || '';
+          return text.includes("You've reached the end of the list") || text.includes("No more results");
+        }
+        return false;
+      }).catch(() => false);
 
       if (collectedListings.length === lastFoundCount) {
         unchangedRounds++;
@@ -150,15 +155,16 @@ class MapsScraper {
         lastFoundCount = collectedListings.length;
       }
 
-      // Scroll the results container directly
-      await page.evaluate((sel) => {
-        const container = document.querySelector(sel);
+      // Scroll the results feed directly
+      await page.evaluate(() => {
+        const container = document.querySelector('div[role="feed"]') || document.querySelector('div.m6QErb[aria-label]') || document.querySelector('div[role="main"]');
         if (container) {
-          container.scrollBy(0, 1200);
+          container.scrollBy(0, 1500);
+          container.scrollTop += 1500;
         } else {
-          window.scrollBy(0, 1000);
+          window.scrollBy(0, 1200);
         }
-      }, scrollSelector);
+      }).catch(() => {});
 
       await MapsScraper.sleep(1200);
       scrollAttempts++;

@@ -22,6 +22,11 @@ class BrowserManager {
       '--no-sandbox',
       '--disable-setuid-sandbox',
       '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--disable-renderer-backgrounding',
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-ipc-flooding-protection',
       '--disable-blink-features=AutomationControlled',
       '--disable-features=IsolateOrigins,site-per-process',
       '--lang=en-US,en',
@@ -35,6 +40,7 @@ class BrowserManager {
     this.browser = await puppeteerExtra.launch({
       headless: this.config.headless ? 'new' : false,
       args,
+      protocolTimeout: this.config.protocolTimeoutMs || 300000,
       defaultViewport: {
         width: this.config.viewport.width,
         height: this.config.viewport.height,
@@ -113,7 +119,8 @@ class BrowserManager {
       }
 
       const pageText = await page.evaluate(() => {
-        return (document.body ? document.body.innerText : '') + ' ' + (document.title || '');
+        const bodyText = document.body ? (document.body.textContent || document.body.innerText || '') : '';
+        return bodyText + ' ' + (document.title || '');
       });
 
       const blockPhrases = [
@@ -125,7 +132,7 @@ class BrowserManager {
         'recaptcha',
       ];
 
-      const lowerText = pageText.toLowerCase();
+      const lowerText = String(pageText).toLowerCase();
       for (const phrase of blockPhrases) {
         if (lowerText.includes(phrase)) {
           return true;
@@ -150,6 +157,28 @@ class BrowserManager {
       }
       this.externalPage = null;
     }
+  }
+
+  /**
+   * Close maps page tab
+   */
+  async closeMapsPage() {
+    if (this.mapsPage && !this.mapsPage.isClosed()) {
+      try {
+        await this.mapsPage.close();
+      } catch (err) {
+        // ignore
+      }
+      this.mapsPage = null;
+    }
+  }
+
+  /**
+   * Reset all working pages to free memory and detached DOM nodes between combos
+   */
+  async resetPages() {
+    await this.closeExternalPage();
+    await this.closeMapsPage();
   }
 
   /**

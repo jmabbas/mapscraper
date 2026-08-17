@@ -25,6 +25,7 @@ class ScraperEngine {
     const startTime = Date.now();
     const comboDeadline = startTime + (this.config.perComboMaxDurationMs || 240000);
     const effectiveDeadline = deadline ? Math.min(deadline, comboDeadline) : comboDeadline;
+    const collectedStores = [];
 
     console.log(`\n======================================================`);
     console.log(`[Combo Start] "${combo.category}" in "${combo.city}"`);
@@ -32,117 +33,129 @@ class ScraperEngine {
     console.log(`Target: up to ${targetPerCombo} stores`);
     console.log(`======================================================`);
 
-    const mapsPage = await this.browserManager.getMapsPage();
+    try {
+      const mapsPage = await this.browserManager.getMapsPage();
 
-    // 1. Navigate to Maps Search URL
-    console.log(`[1/3] Navigating to Maps search page...`);
-    const navResult = await this.mapsScraper.navigateToSearch(mapsPage, combo.url);
-    if (navResult.blocked) {
-      console.warn(`[BLOCKED] Google detected unusual traffic on search page.`);
-      return {
-        blocked: true,
-        complete: false,
-        stores: [],
-        error: 'Google unusual traffic block detected',
-      };
-    }
-
-    // 2. Collect listing URLs from results feed
-    console.log(`[2/3] Scrolling feed to find up to ${targetPerCombo} store listings...`);
-    const listings = await this.mapsScraper.collectListingLinks(mapsPage, targetPerCombo);
-    console.log(`Found ${listings.length} listings for "${combo.category} in ${combo.city}"`);
-
-    if (listings.length === 0) {
-      return {
-        blocked: false,
-        complete: true,
-        stores: [],
-      };
-    }
-
-    // 3. Process listings in batches with pacing & tab reuse
-    const collectedStores = [];
-    const batchSize = this.config.batchSize || 5;
-    const batchPauseMs = this.config.batchPauseMs || 3000;
-
-    const externalPage = await this.browserManager.getExternalPage();
-
-    for (let i = 0; i < listings.length; i += batchSize) {
-      // Check timebox cutoff
-      if (Date.now() >= effectiveDeadline) {
-        console.warn(`[TIMEBOX] Per-combo time limit reached. Returning partial results (${collectedStores.length} stores).`);
-        await this.browserManager.closeExternalPage();
+      // 1. Navigate to Maps Search URL
+      console.log(`[1/3] Navigating to Maps search page...`);
+      const navResult = await this.mapsScraper.navigateToSearch(mapsPage, combo.url);
+      if (navResult.blocked) {
+        console.warn(`[BLOCKED] Google detected unusual traffic on search page.`);
         return {
-          blocked: false,
+          blocked: true,
           complete: false,
-          stores: collectedStores,
-          timeboxExceeded: true,
+          stores: [],
+          error: 'Google unusual traffic block detected',
         };
       }
 
-      const batch = listings.slice(i, i + batchSize);
-      console.log(`\n--- Processing Batch ${Math.floor(i / batchSize) + 1} (${batch.length} stores) ---`);
+      // 2. Collect listing URLs from results feed
+      console.log(`[2/3] Scrolling feed to find up to ${targetPerCombo} store listings...`);
+      const listings = await this.mapsScraper.collectListingLinks(mapsPage, targetPerCombo);
+      console.log(`Found ${listings.length} listings for "${combo.category} in ${combo.city}"`);
 
-      for (let j = 0; j < batch.length; j++) {
-        const item = batch[j];
-        const overallIndex = i + j + 1;
-        console.log(`[${overallIndex}/${listings.length}] Extracting details for: "${item.name}"`);
+      if (listings.length === 0) {
+        return {
+          blocked: false,
+          complete: true,
+          stores: [],
+        };
+      }
 
-        // Scrape place details
-        const details = await this.mapsScraper.scrapePlaceDetails(mapsPage, item.url, item.name);
-        if (details.blocked) {
-          console.warn(`[BLOCKED] Google block detected while scraping store: ${item.name}`);
-          await this.browserManager.closeExternalPage();
+      // 3. Process listings in batches with pacing & tab reuse
+      const batchSize = this.config.batchSize || 5;
+      const batchPauseMs = this.config.batchPauseMs || 3000;
+
+      const externalPage = await this.browserManager.getExternalPage();
+
+      for (let i = 0; i < listings.length; i += batchSize) {
+        // Check timebox cutoff
+        if (Date.now() >= effectiveDeadline) {
+          console.warn(`[TIMEBOX] Per-combo time limit reached. Returning partial results (${collectedStores.length} stores).`);
           return {
-            blocked: true,
+            blocked: false,
             complete: false,
             stores: collectedStores,
-            error: 'Google block detected during place details',
+            timeboxExceeded: true,
           };
         }
 
-        // Email extraction from website
-        let email = 'Not found';
-        if (details.website && details.website !== 'Not found' && details.website.startsWith('http')) {
-          console.log(`  -> Visiting website: ${details.website}`);
-          email = await EmailExtractor.extractEmails(
-            externalPage,
-            details.website,
-            this.config.websiteTimeoutMs || 12000
-          );
-          if (email !== 'Not found') {
-            console.log(`  ✓ Email found: ${email}`);
+        const batch = listings.slice(i, i + batchSize);
+        console.log(`\n--- Processing Batch ${Math.floor(i / batchSize) + 1} (${batch.length} stores) ---`);
+
+        for (let j = 0; j < batch.length; j++) {
+          const item = batch[j];
+          const overallIndex = i + j + 1;
+          console.log(`[${overallIndex}/${listings.length}] Extracting details for: "${item.name}"`);
+
+          try {
+            // Scrape place details
+            const details = await this.mapsScraper.scrapePlaceDetails(mapsPage, item.url, item.name);
+            if (details.blocked) {
+              console.warn(`[BLOCKED] Google block detected while scraping store: ${item.name}`);
+              return {
+                blocked: true,
+                complete: false,
+                stores: collectedStores,
+                error: 'Google block detected during place details',
+              };
+            }
+
+            // Email extraction from website
+            let email = 'Not found';
+            if (details.website && details.website !== 'Not found' && details.website.startsWith('http')) {
+              console.log(`  -> Visiting website: ${details.website}`);
+              email = await EmailExtractor.extractEmails(
+                externalPage,
+                details.website,
+                this.config.websiteTimeoutMs || 12000
+              );
+              if (email !== 'Not found') {
+                console.log(`  ✓ Email found: ${email}`);
+              }
+            }
+
+            const storeRecord = {
+              city: combo.city,
+              category: combo.category,
+              name: details.name || item.name || 'Not found',
+              url: item.url,
+              address: details.address || 'Not found',
+              website: details.website || 'Not found',
+              email,
+              scrapedAt: new Date().toISOString(),
+            };
+
+            collectedStores.push(storeRecord);
+          } catch (itemErr) {
+            console.warn(`  [WARN] Failed extracting store "${item.name}": ${itemErr.message}`);
           }
         }
 
-        const storeRecord = {
-          city: combo.city,
-          category: combo.category,
-          name: details.name || item.name || 'Not found',
-          url: item.url,
-          address: details.address || 'Not found',
-          website: details.website || 'Not found',
-          email,
-          scrapedAt: new Date().toISOString(),
-        };
-
-        collectedStores.push(storeRecord);
+        // Pause between batches if more listings remain in this combo
+        if (i + batchSize < listings.length) {
+          console.log(`[Pacing] Pausing ${batchPauseMs}ms before next batch...`);
+          await ScraperEngine.sleep(batchPauseMs);
+        }
       }
 
-      // Pause between batches if more listings remain in this combo
-      if (i + batchSize < listings.length) {
-        console.log(`[Pacing] Pausing ${batchPauseMs}ms before next batch...`);
-        await ScraperEngine.sleep(batchPauseMs);
-      }
+      return {
+        blocked: false,
+        complete: true,
+        stores: collectedStores,
+      };
+    } catch (err) {
+      console.error(`[ERROR] Combo processing encountered error: ${err.message}`);
+      return {
+        blocked: false,
+        complete: false,
+        stores: collectedStores,
+        error: err.message,
+      };
+    } finally {
+      // Clean up tab memory between combos
+      await this.browserManager.resetPages().catch(() => {});
     }
-
-    await this.browserManager.closeExternalPage();
-
-    return {
-      blocked: false,
-      complete: true,
-      stores: collectedStores,
-    };
   }
 
   /**
@@ -175,7 +188,6 @@ class ScraperEngine {
     const allStores = [];
     let completedCombosCount = 0;
     let isBlocked = false;
-    let lastProcessedCombo = null;
 
     try {
       for (let i = 0; i < combos.length; i++) {
@@ -186,9 +198,16 @@ class ScraperEngine {
         }
 
         const combo = combos[i];
-        lastProcessedCombo = combo;
+        let result = await this.processCombo(combo, targetPerCombo, runDeadline);
 
-        const result = await this.processCombo(combo, targetPerCombo, runDeadline);
+        // If an unexpected error occurred (e.g. ProtocolError or crash) and not blocked, retry once with clean browser
+        if (result.error && !result.blocked) {
+          console.warn(`[RETRY] Encountered error on "${combo.category} in ${combo.city}". Restarting browser and retrying...`);
+          await this.browserManager.close().catch(() => {});
+          await ScraperEngine.sleep(2000);
+
+          result = await this.processCombo(combo, targetPerCombo, runDeadline);
+        }
 
         if (result.blocked) {
           isBlocked = true;
@@ -203,6 +222,13 @@ class ScraperEngine {
         // Advance cursor incrementally after each successful combo
         this.queueManager.advance(1, result.stores.length, combo);
 
+        // Incrementally export results so data is safely on disk
+        if (result.stores.length > 0) {
+          this.exporter.exportResults(result.stores, {
+            incrementalCombo: { city: combo.city, category: combo.category },
+          });
+        }
+
         // Pause between combos if more combos remain in this run
         if (i + 1 < combos.length) {
           const pauseMs = this.config.comboPauseMs || 5000;
@@ -211,12 +237,12 @@ class ScraperEngine {
         }
       }
     } finally {
-      await this.browserManager.close();
+      await this.browserManager.close().catch(() => {});
     }
 
     const durationMs = Date.now() - startTime;
 
-    // Export results to JSON and CSV
+    // Export run summary
     let exportInfo = null;
     if (allStores.length > 0) {
       exportInfo = this.exporter.exportResults(allStores, {
@@ -279,7 +305,7 @@ class ScraperEngine {
         exportInfo,
       };
     } finally {
-      await this.browserManager.close();
+      await this.browserManager.close().catch(() => {});
     }
   }
 }
