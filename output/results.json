@@ -7638,5 +7638,665 @@
     "website": "https://www.startingstrengthgyms.com/chicago/",
     "email": "Not found",
     "scrapedAt": "2026-08-19 12:06:28 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Micro Center",
+    "url": "https://www.google.com/maps/place/Micro+Center/data=!4m7!3m6!1s0x880fd28e80473f2b:0xf764d92e5f4fa3ba!8m2!3d41.9303995!4d-87.6828576!16s%2Fg%2F1tf8tpwy!19sChIJKz9HgI7SD4gRuqNPXy7ZZPc?authuser=0&hl=en&rclk=1",
+    "address": "2645 N Elston Ave, Chicago, IL 60647, United States",
+    "website": "https://www.microcenter.com/site/stores/chicago.aspx?storeid=151",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:14 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Apple Michigan Avenue",
+    "url": "https://www.google.com/maps/place/Apple+Michigan+Avenue/data=!4m7!3m6!1s0x880e2cacae93323d:0x23b0b0fe8528f4e4!8m2!3d41.8895007!4d-87.6228522!16s%2Fg%2F1tdpb5tq!19sChIJPTKTrqwsDogR5PQohf6wsCM?authuser=0&hl=en&rclk=1",
+    "address": "401 N Michigan Ave, Chicago, IL 60611, United States",
+    "website": "https://www.apple.com/retail/michiganavenue?cid=aos-us-seo-maps",
+    "email": "michiganavenue@apple.com",
+    "scrapedAt": "2026-08-19 14:00:19 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Popular Electronics",
+    "url": "https://www.google.com/maps/place/Popular+Electronics/data=!4m7!3m6!1s0x880fd1ddcfd8874f:0x172150e7d6402961!8m2!3d41.997462!4d-87.692045!16s%2Fg%2F1tdgv_bt!19sChIJT4fYz93RD4gRYSlA1udQIRc?authuser=0&hl=en&rclk=1",
+    "address": "2455 W Devon Ave, Chicago, IL 60659, United States",
+    "website": "http://www.popularelectronics.com/",
+    "email": "info@popularelectronics.com",
+    "scrapedAt": "2026-08-19 14:00:23 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Minas Electronics",
+    "url": "https://www.google.com/maps/place/Minas+Electronics/data=!4m7!3m6!1s0x880fd197b7a71e9f:0x88741292e4a9eb70!8m2!3d41.99375!4d-87.669812!16s%2Fg%2F1tfv14dv!19sChIJnx6nt5fRD4gRcOup5JISdIg?authuser=0&hl=en&rclk=1",
+    "address": "6137 N Clark St, Chicago, IL 60660, United States",
+    "website": "http://www.minastv.com/",
+    "email": "minastv@ymail.com",
+    "scrapedAt": "2026-08-19 14:00:26 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Martroy Electronics",
+    "url": "https://www.google.com/maps/place/Martroy+Electronics/data=!4m7!3m6!1s0x880e31d365bc57bb:0xd6703f3aeb4c3144!8m2!3d41.779104!4d-87.702906!16s%2Fg%2F1wz538z9!19sChIJu1e8ZdMxDogRRDFM6zo_cNY?authuser=0&hl=en&rclk=1",
+    "address": "6259 S Kedzie Ave, Chicago, IL 60629, United States",
+    "website": "https://martroyelectronics.com/",
+    "email": "martroy11@comcast.net, 776-7000martroy11@comcast.net",
+    "scrapedAt": "2026-08-19 14:00:29 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Best Buy",
+    "url": "https://www.google.com/maps/place/Best+Buy/data=!4m7!3m6!1s0x880fd3215727a333:0x3471e8a9c8708e0d!8m2!3d41.9125559!4d-87.6545946!16s%2Fg%2F1trprd9y!19sChIJM6MnVyHTD4gRDY5wyKnocTQ?authuser=0&hl=en&rclk=1",
+    "address": "1000 W North Ave, Chicago, IL 60642, United States",
+    "website": "https://stores.bestbuy.com/il/chicago/1000-w-north-ave-323.html/?ref=NS&loc=ns100",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:38 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Overseas Electronics",
+    "url": "https://www.google.com/maps/place/Overseas+Electronics/data=!4m7!3m6!1s0x880fd1ddd044396d:0x6b69aa3b30ea3768!8m2!3d41.9976018!4d-87.6921097!16s%2Fg%2F1td72lp6!19sChIJbTlE0N3RD4gRaDfqMDuqaWs?authuser=0&hl=en&rclk=1",
+    "address": "2457 W Devon Ave, Chicago, IL 60659, United States",
+    "website": "https://welectronics.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:40 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Jalisco Electronics",
+    "url": "https://www.google.com/maps/place/Jalisco+Electronics/data=!4m7!3m6!1s0x880e2d352feb54a9:0x26b7b7bed815747c!8m2!3d41.8958098!4d-87.67592!16s%2Fg%2F1ptxg8n1_!19sChIJqVTrLzUtDogRfHQV2L63tyY?authuser=0&hl=en&rclk=1",
+    "address": "1933 W Chicago Ave, Chicago, IL 60622, United States",
+    "website": "Not found",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:41 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Best Buy",
+    "url": "https://www.google.com/maps/place/Best+Buy/data=!4m7!3m6!1s0x880fd2e8e8789065:0xdc3845884f2a4004!8m2!3d41.919002!4d-87.66959!16s%2Fg%2F1tf60wxc!19sChIJZZB46OjSD4gRBEAqT4hFONw?authuser=0&hl=en&rclk=1",
+    "address": "2100 N Elston Ave, Chicago, IL 60614, United States",
+    "website": "https://stores.bestbuy.com/il/chicago/2100-n-elston-ave-814.html/?ref=NS&loc=ns100",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:46 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Target",
+    "url": "https://www.google.com/maps/place/Target/data=!4m7!3m6!1s0x880e2ca4967a25fd:0x7ad7c727b728c4e8!8m2!3d41.8817753!4d-87.627419!16s%2Fg%2F1hf0k9dqy!19sChIJ_SV6lqQsDogR6MQotyfH13o?authuser=0&hl=en&rclk=1",
+    "address": "1 S State St, Chicago, IL 60603, United States",
+    "website": "https://www.target.com/sl/chicago-state-st./2799",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:50 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Best Buy",
+    "url": "https://www.google.com/maps/place/Best+Buy/data=!4m7!3m6!1s0x880e2ceda19ebbef:0x18a260fe9fc40aeb!8m2!3d41.866882!4d-87.641504!16s%2Fg%2F1w4f8pl0!19sChIJ77ueoe0sDogR6wrEn_5gohg?authuser=0&hl=en&rclk=1",
+    "address": "555 W Roosevelt Rd, Chicago, IL 60607, United States",
+    "website": "https://stores.bestbuy.com/il/chicago/555-w-roosevelt-rd-1142.html/?ref=NS&loc=ns100",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:00:57 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Anthony's Electronic Services",
+    "url": "https://www.google.com/maps/place/Anthony%27s+Electronic+Services/data=!4m7!3m6!1s0x880fd3b7d1b8de1d:0x7b4f586301f6a6d2!8m2!3d41.9548965!4d-87.6504374!16s%2Fg%2F1tf6sd6f!19sChIJHd640bfTD4gR0qb2AWNYT3s?authuser=0&hl=en&rclk=1",
+    "address": "4007 N Broadway, Chicago, IL 60613, United States",
+    "website": "http://www.anthonyses.com/",
+    "email": "anthonyses@hotmail.com",
+    "scrapedAt": "2026-08-19 14:01:01 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Saturday Audio Exchange",
+    "url": "https://www.google.com/maps/place/Saturday+Audio+Exchange/data=!4m7!3m6!1s0x880fd3ab9060ff63:0x7a2718c96588b6b3!8m2!3d41.939748!4d-87.654969!16s%2Fg%2F1tgw5mlg!19sChIJY_9gkKvTD4gRs7aIZckYJ3o?authuser=0&hl=en&rclk=1",
+    "address": "1021 W Belmont Ave, Chicago, IL 60657, United States",
+    "website": "https://live-saturdayaudio.pantheonsite.io/",
+    "email": "info@saturdayaudio.com",
+    "scrapedAt": "2026-08-19 14:01:04 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Bombay Electronics",
+    "url": "https://www.google.com/maps/place/Bombay+Electronics/data=!4m7!3m6!1s0x880fd1de7be575bf:0xab59dc202676507b!8m2!3d42.0169629!4d-87.762826!16s%2Fg%2F1v_s6gwn!19sChIJv3Xle97RD4gRe1B2JiDcWas?authuser=0&hl=en&rclk=1",
+    "address": "7440 Long Ave, Skokie, IL 60077, United States",
+    "website": "http://www.bombayelectronics.com/",
+    "email": "info@bombayelectronics.com",
+    "scrapedAt": "2026-08-19 14:01:10 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Chicago Electronics",
+    "url": "https://www.google.com/maps/place/Chicago+Electronics/data=!4m7!3m6!1s0x880fd1dd58ba5b71:0x6c0e835e9faf2a74!8m2!3d41.997998!4d-87.689486!16s%2Fg%2F11tg3hxn0y!19sChIJcVu6WN3RD4gRdCqvn16DDmw?authuser=0&hl=en&rclk=1",
+    "address": "6401 N Western Ave, Chicago, IL 60645, United States",
+    "website": "https://www.desiclik.com/united-global-distributor-inc",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:01:22 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Universal Electronics & Appliances",
+    "url": "https://www.google.com/maps/place/Universal+Electronics+%26+Appliances/data=!4m7!3m6!1s0x880fd1ddd08a41cf:0x917b8652adb3fb3d!8m2!3d41.9975863!4d-87.6921687!16s%2Fg%2F11hctkvm2l!19sChIJz0GK0N3RD4gRPfuzrVKGe5E?authuser=0&hl=en&rclk=1",
+    "address": "2459 W Devon Ave, Chicago, IL 60659, United States",
+    "website": "Not found",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:01:27 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Apple Lincoln Park",
+    "url": "https://www.google.com/maps/place/Apple+Lincoln+Park/data=!4m7!3m6!1s0x880fd324aa2af5ab:0xd0de68d59a4d39a3!8m2!3d41.910609!4d-87.64849!16s%2Fg%2F1tfc768t!19sChIJq_UqqiTTD4gRozlNmtVo3tA?authuser=0&hl=en&rclk=1",
+    "address": "801 W North Ave, Chicago, IL 60642, United States",
+    "website": "https://www.apple.com/retail/lincolnpark?cid=aos-us-seo-maps",
+    "email": "lincolnpark@apple.com",
+    "scrapedAt": "2026-08-19 14:01:31 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Worldwide Electronics",
+    "url": "https://www.google.com/maps/place/Worldwide+Electronics/data=!4m7!3m6!1s0x880fd1dd1c109681:0xa1facea7f876339c!8m2!3d41.997856!4d-87.6893407!16s%2Fg%2F1tz96bm9!19sChIJgZYQHN3RD4gRnDN2-KfO-qE?authuser=0&hl=en&rclk=1",
+    "address": "2348 W Devon Ave, Chicago, IL 60659, United States",
+    "website": "Not found",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:01:33 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Chicago Audio",
+    "url": "https://www.google.com/maps/place/Chicago+Audio/data=!4m7!3m6!1s0x880e31b4a51833ef:0xa7dbab8837a47861!8m2!3d41.7784735!4d-87.7215295!16s%2Fg%2F1tl7p95j!19sChIJ7zMYpbQxDogRYXikN4ir26c?authuser=0&hl=en&rclk=1",
+    "address": "3933 W 63rd St, Chicago, IL 60629, United States",
+    "website": "https://chicagoaudio.net/",
+    "email": "info@chicagoaudio.net",
+    "scrapedAt": "2026-08-19 14:01:43 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Electronics",
+    "name": "Staples",
+    "url": "https://www.google.com/maps/place/Staples/data=!4m7!3m6!1s0x880e2ca598944d19:0x6404e8e22e50cb5a!8m2!3d41.8833758!4d-87.6260013!16s%2Fg%2F1td011v4!19sChIJGU2UmKUsDogRWstQLuLoBGQ?authuser=0&hl=en&rclk=1",
+    "address": "111 N Wabash Ave, Chicago, IL 60602, United States",
+    "website": "https://stores.staples.com/il/chicago/111-north-wabash-ave.?cmpid=st_ll_goo&cid=LS:RETAIL:G&utm_source=google&utm_medium=organic&utm_campaign=Google_Business_Listing",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:01:46 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Rooms4Kids",
+    "url": "https://www.google.com/maps/place/Rooms4Kids/data=!4m7!3m6!1s0x880e2c5ecb55d8e9:0x3b8fc432d8d0fd0a!8m2!3d41.897905!4d-87.864395!16s%2Fg%2F1264580yl!19sChIJ6dhVy14sDogRCv3Q2DLEjzs?authuser=0&hl=en&rclk=1",
+    "address": "1320 25th Ave, Melrose Park, IL 60160, United States",
+    "website": "http://rooms4kids.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:01:59 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "The Home Place Chicago",
+    "url": "https://www.google.com/maps/place/The+Home+Place+Chicago/data=!4m7!3m6!1s0x880fcc7d97408601:0x68d9d5df594a2d91!8m2!3d41.9387324!4d-87.7696431!16s%2Fg%2F11dxrmg88p!19sChIJAYZAl33MD4gRkS1KWd_V2Wg?authuser=0&hl=en&rclk=1",
+    "address": "5714 W Belmont Ave, Chicago, IL 60634, United States",
+    "website": "https://thehomeplacechicago.com/",
+    "email": "info@thehomeplacechicago.com",
+    "scrapedAt": "2026-08-19 14:02:02 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Modulove Furniture (Formerly Comfy Living Chicago)",
+    "url": "https://www.google.com/maps/place/Modulove+Furniture+%28Formerly+Comfy+Living+Chicago%29/data=!4m7!3m6!1s0x880fcd9cb12fba4b:0x505dc53b5bde5bd8!8m2!3d41.8876417!4d-87.7050383!16s%2Fg%2F11swfds38m!19sChIJS7ovsZzND4gR2FveWzvFXVA?authuser=0&hl=en&rclk=1",
+    "address": "3124 W Carroll Ave, Chicago, IL 60612, United States",
+    "website": "https://modulovefurniture.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:07 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "New Age Chicago Furniture Co.",
+    "url": "https://www.google.com/maps/place/New+Age+Chicago+Furniture+Co./data=!4m7!3m6!1s0x880e2be2fb45ef35:0x533c31b5695ecf67!8m2!3d41.8174653!4d-87.6070058!16s%2Fg%2F1tdx4qdj!19sChIJNe9F--IrDogRZ89eabUxPFM?authuser=0&hl=en&rclk=1",
+    "address": "4238 S Cottage Grove Ave, Chicago, IL 60653, United States",
+    "website": "https://www.chicagofurnitureonlinestore.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:11 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Everyhome Furniture",
+    "url": "https://www.google.com/maps/place/Everyhome+Furniture/data=!4m7!3m6!1s0x880e295b64ab753b:0x950e04edd6ec1851!8m2!3d41.8093027!4d-87.6058209!16s%2Fg%2F11ns48bjyv!19sChIJO3WrZFspDogRURjs1u0EDpU?authuser=0&hl=en&rclk=1",
+    "address": "813 E 47th St, Chicago, IL 60653, United States",
+    "website": "http://everyhome-furniture.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:15 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Jayson Home",
+    "url": "https://www.google.com/maps/place/Jayson+Home/data=!4m7!3m6!1s0x880fd321d56ee1d5:0x9957d212492ca38b!8m2!3d41.9155807!4d-87.6555632!16s%2Fg%2F1tfqgdg8!19sChIJ1eFu1SHTD4gRi6MsSRLSV5k?authuser=0&hl=en&rclk=1",
+    "address": "1885 N Clybourn Ave, Chicago, IL 60614, United States",
+    "website": "https://www.jaysonhome.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:20 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Top Home Furniture",
+    "url": "https://www.google.com/maps/place/Top+Home+Furniture/data=!4m7!3m6!1s0x880e2fa3e0ac0885:0x673d0251b77e4849!8m2!3d41.7605727!4d-87.6631606!16s%2Fg%2F11b7q0vm35!19sChIJhQis4KMvDogRSUh-t1ECPWc?authuser=0&hl=en&rclk=1",
+    "address": "7325 S Ashland Ave, Chicago, IL 60636, United States",
+    "website": "https://www.tophomefurniture.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:27 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Cassona Home",
+    "url": "https://www.google.com/maps/place/Cassona+Home/data=!4m7!3m6!1s0x880fd18879653695:0x5d64fa4d6570c783!8m2!3d41.977475!4d-87.668032!16s%2Fg%2F1tjl6hsy!19sChIJlTZleYjRD4gRg8dwZU36ZF0?authuser=0&hl=en&rclk=1",
+    "address": "5241 N Clark St, Chicago, IL 60640, United States",
+    "website": "https://cassona.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:39 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Ultimate Furniture & Mattress",
+    "url": "https://www.google.com/maps/place/Ultimate+Furniture+%26+Mattress/data=!4m7!3m6!1s0x880e286b05cfa6d7:0x2b031ae66d184263!8m2!3d41.7515702!4d-87.5617251!16s%2Fg%2F1hc5pmwvt!19sChIJ16bPBWsoDogRY0IYbeYaAys?authuser=0&hl=en&rclk=1",
+    "address": "2547 E 79th St, Chicago, IL 60649, United States",
+    "website": "https://ultimatefurnitureusa.com/",
+    "email": "csm@chfurnituremattress.com",
+    "scrapedAt": "2026-08-19 14:02:44 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Express Furniture Outlet & More",
+    "url": "https://www.google.com/maps/place/Express+Furniture+Outlet+%26+More/data=!4m7!3m6!1s0x880e2eb80a776bfb:0x44c09beb3ce604b1!8m2!3d41.7958458!4d-87.629188!16s%2Fg%2F11c56rjvl7!19sChIJ-2t3CrguDogRsQTmPOubwEQ?authuser=0&hl=en&rclk=1",
+    "address": "5401 S Wentworth Ave, Chicago, IL 60609, United States",
+    "website": "http://www.expressfurnitureoutletandmore.com/",
+    "email": "expressfurnitureoutletandmore@hotmail.com",
+    "scrapedAt": "2026-08-19 14:02:48 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Central Furniture",
+    "url": "https://www.google.com/maps/place/Central+Furniture/data=!4m7!3m6!1s0x880fcd244b248f67:0x7a11d67b9f1e02d7!8m2!3d41.909595!4d-87.7303543!16s%2Fg%2F11b5_xbt3c!19sChIJZ48kSyTND4gR1wIen3vWEXo?authuser=0&hl=en&rclk=1",
+    "address": "4141 W North Ave #1, Chicago, IL 60639, United States",
+    "website": "https://www.centralfurnitureonline.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:02:57 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Room & Board",
+    "url": "https://www.google.com/maps/place/Room+%26+Board/data=!4m7!3m6!1s0x880e2cac545fcf19:0x9da1537994ae9234!8m2!3d41.8922713!4d-87.6257215!16s%2Fg%2F1w4f8pjy!19sChIJGc9fVKwsDogRNJKulHlToZ0?authuser=0&hl=en&rclk=1",
+    "address": "55 E Ohio St, Chicago, IL 60611, United States",
+    "website": "https://www.roomandboard.com/stores/chicago?Camp=loc_chicago",
+    "email": "chicago@roomandboard.com, deliveryteamchicago@roomandboard.com",
+    "scrapedAt": "2026-08-19 14:03:00 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Burrow House",
+    "url": "https://www.google.com/maps/place/Burrow+House/data=!4m7!3m6!1s0x880fd3a3e161f8a3:0xcb7f19d914c112e8!8m2!3d41.9089726!4d-87.6480018!16s%2Fg%2F11scjlq9g6!19sChIJo_hh4aPTD4gR6BLBFNkZf8s?authuser=0&hl=en&rclk=1",
+    "address": "1501 N Halsted St Ste A118, Chicago, IL 60642, United States",
+    "website": "https://burrow.com/",
+    "email": "support@burrow.com",
+    "scrapedAt": "2026-08-19 14:03:06 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Milwaukee Furniture",
+    "url": "https://www.google.com/maps/place/Milwaukee+Furniture/data=!4m7!3m6!1s0x880fd2c586ee41ab:0x7fcaf4a7d88ec588!8m2!3d41.906273!4d-87.6707732!16s%2Fg%2F1tdqp7kf!19sChIJq0HuhsXSD4gRiMWO2Kf0yn8?authuser=0&hl=en&rclk=1",
+    "address": "1341 N Milwaukee Ave, Chicago, IL 60622, United States",
+    "website": "https://www.milwaukeefurniture.net/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:09 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Roy's Furniture",
+    "url": "https://www.google.com/maps/place/Roy%27s+Furniture/data=!4m7!3m6!1s0x880fd3036679cf1f:0x1a9a3ef98d0a0d7d!8m2!3d41.926968!4d-87.653306!16s%2Fg%2F1tg2f2j0!19sChIJH895ZgPTD4gRfQ0Kjfk-mho?authuser=0&hl=en&rclk=1",
+    "address": "2455 N Sheffield Ave, Chicago, IL 60614, United States",
+    "website": "http://www.shoproysfurniture.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:14 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Inside Home Ltd",
+    "url": "https://www.google.com/maps/place/Inside+Home+Ltd/data=!4m7!3m6!1s0x880e2d3533878617:0x55a69c6eb7ac67ac!8m2!3d41.8960529!4d-87.6762639!16s%2Fg%2F12612czx8!19sChIJF4aHMzUtDogRrGest26cplU?authuser=0&hl=en&rclk=1",
+    "address": "1942 W Chicago Ave, Chicago, IL 60622, United States",
+    "website": "https://insidehome.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:21 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "west elm",
+    "url": "https://www.google.com/maps/place/west+elm/data=!4m7!3m6!1s0x880fd323fe229675:0x77a55da7e41c27db!8m2!3d41.9115149!4d-87.6540112!16s%2Fg%2F1v_0kbk1!19sChIJdZYi_iPTD4gR2ycc5KddpXc?authuser=0&hl=en&rclk=1",
+    "address": "1000 W North Ave Ste B, Chicago, IL 60642, United States",
+    "website": "https://www.westelm.com/stores/us-il-chicago-lincoln-park/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:30 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Furniture Zone Inc",
+    "url": "https://www.google.com/maps/place/Furniture+Zone+Inc/data=!4m7!3m6!1s0x880e33527736adc5:0x4fcb6095bd2f01eb!8m2!3d41.8946625!4d-87.7668929!16s%2Fg%2F1tgpysrh!19sChIJxa02d1IzDogR6wEvvZVgy08?authuser=0&hl=en&rclk=1",
+    "address": "5635 W Chicago Ave, Chicago, IL 60651, United States",
+    "website": "https://yourbestmattress.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:34 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Furniture Stars",
+    "url": "https://www.google.com/maps/place/Furniture+Stars/data=!4m7!3m6!1s0x880e318e94c40a5f:0x4e1b7206d56085b2!8m2!3d41.7569124!4d-87.7429815!16s%2Fg%2F11fjthj6tg!19sChIJXwrElI4xDogRsoVg1QZyG04?authuser=0&hl=en&rclk=1",
+    "address": "7438 S Cicero Ave, Chicago, IL 60629, United States",
+    "website": "https://shopfurniturestars.com/",
+    "email": "furnitureworld7438@gmail.com",
+    "scrapedAt": "2026-08-19 14:03:39 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "𝓐 & 𝓔 𝓯𝓾𝓻𝓷𝓲𝓽𝓾𝓻𝓮",
+    "url": "https://www.google.com/maps/place/%F0%9D%93%90+%26+%F0%9D%93%94+%F0%9D%93%AF%F0%9D%93%BE%F0%9D%93%BB%F0%9D%93%B7%F0%9D%93%B2%F0%9D%93%BD%F0%9D%93%BE%F0%9D%93%BB%F0%9D%93%AE/data=!4m7!3m6!1s0x880fcdd5c55ab787:0x11337cdb4bac6f3d!8m2!3d41.9693512!4d-87.7277333!16s%2Fg%2F11px3g_p4m!19sChIJh7daxdXND4gRPW-sS9t8MxE?authuser=0&hl=en&rclk=1",
+    "address": "4837 N Pulaski Rd, Chicago, IL 60630, United States",
+    "website": "Not found",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:40 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Chicago Best Furniture",
+    "url": "https://www.google.com/maps/place/Chicago+Best+Furniture/data=!4m7!3m6!1s0x880fcda8b0ec2a6d:0x7af094747c94fd55!8m2!3d41.94131!4d-87.72801!16s%2Fg%2F11hbk4zhgs!19sChIJbSrssKjND4gRVf2UfHSU8Ho?authuser=0&hl=en&rclk=1",
+    "address": "3326 N Milwaukee Ave, Chicago, IL 60641, United States",
+    "website": "https://www.milwaukeefurniture.net/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:44 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Kitchen Cabinet Design LLC",
+    "url": "https://www.google.com/maps/place/Kitchen+Cabinet+Design+LLC/data=!4m7!3m6!1s0x880e3fc6c1d2c525:0x8adf3158e89f371a!8m2!3d41.623602!4d-87.852684!16s%2Fg%2F11t5gs__m3!19sChIJJcXSwcY_DogRGjef6Fgx34o?authuser=0&hl=en&rclk=1",
+    "address": "9556 W 147th St, Orland Park, IL 60462, United States",
+    "website": "https://www.kitchencabinetdesign.us/",
+    "email": "info@kitchencabinetdesign.us",
+    "scrapedAt": "2026-08-19 14:03:50 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Moderne Living",
+    "url": "https://www.google.com/maps/place/Moderne+Living/data=!4m7!3m6!1s0x880e2cb4d19842c5:0x5aed1ca7acb0ef92!8m2!3d41.895702!4d-87.6348793!16s%2Fg%2F11b869rgf3!19sChIJxUKY0bQsDogRku-wrKcc7Vo?authuser=0&hl=en&rclk=1",
+    "address": "222 W Superior St, Chicago, IL 60654, United States",
+    "website": "http://moderneliving.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:03:55 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Interior Define",
+    "url": "https://www.google.com/maps/place/Interior+Define/data=!4m7!3m6!1s0x880fd2b8bae0f229:0x9d48a207715e4bc6!8m2!3d41.9179707!4d-87.6498482!16s%2Fg%2F1ptz3933_!19sChIJKfLgurjSD4gRxktecQeiSJ0?authuser=0&hl=en&rclk=1",
+    "address": "833 W Armitage Ave, Chicago, IL 60614, United States",
+    "website": "https://www.interiordefine.com/locations/chicago?utm_source=google&utm_medium=organic&utm_campaign=gmb&utm_term=chicago",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:02 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home & Furniture",
+    "name": "Chatham Furniture & More",
+    "url": "https://www.google.com/maps/place/Chatham+Furniture+%26+More/data=!4m7!3m6!1s0x880e2fa5f9106093:0xfac366354d5516e8!8m2!3d41.7666289!4d-87.6634517!16s%2Fg%2F11b70f6n5j!19sChIJk2AQ-aUvDogR6BZVTTVmw_o?authuser=0&hl=en&rclk=1",
+    "address": "7001 S Ashland Ave, Chicago, IL 60636, United States",
+    "website": "http://www.chathamfurniturechicago.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:08 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Humboldt House",
+    "url": "https://www.google.com/maps/place/Humboldt+House/data=!4m7!3m6!1s0x880fd2aa15dbbac5:0x6aa674ea0ee3f5a3!8m2!3d41.9006161!4d-87.6965456!16s%2Fg%2F1z44b4qg0!19sChIJxbrbFarSD4gRo_XjDup0pmo?authuser=0&hl=en&rclk=1",
+    "address": "1045 N California Ave, Chicago, IL 60622, United States",
+    "website": "http://humboldthouseco.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:22 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "GL Home Decor",
+    "url": "https://www.google.com/maps/place/GL+Home+Decor/data=!4m7!3m6!1s0x880fd3eaa70ee75f:0x1f2d6e2b78c7d3c3!8m2!3d41.9769904!4d-87.6681882!16s%2Fg%2F11h3mtzqxt!19sChIJX-cOp-rTD4gRw9PHeCtuLR8?authuser=0&hl=en&rclk=1",
+    "address": "5225 N Clark St, Chicago, IL 60640, United States",
+    "website": "https://glhomedecor.com/",
+    "email": "chris@glhomedecor.com",
+    "scrapedAt": "2026-08-19 14:04:27 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Marigold Market",
+    "url": "https://www.google.com/maps/place/Marigold+Market/data=!4m7!3m6!1s0x880fd38f2a30d617:0x36d96f18f5e851ef!8m2!3d41.9104002!4d-87.6763992!16s%2Fg%2F11wr19ksds!19sChIJF9YwKo_TD4gR71Ho9Rhv2TY?authuser=0&hl=en&rclk=1",
+    "address": "1935 W North Ave, Chicago, IL 60622, United States",
+    "website": "https://marigoldmarket.co/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:32 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "House 15 | Chicago Vintage & Home Decor",
+    "url": "https://www.google.com/maps/place/House+15+%7C+Chicago+Vintage+%26+Home+Decor/data=!4m7!3m6!1s0x880fd390ff8ae52f:0x69556eeb8fb39d54!8m2!3d41.9397628!4d-87.6750536!16s%2Fg%2F11sb75n9ns!19sChIJL-WK_5DTD4gRVJ2zj-tuVWk?authuser=0&hl=en&rclk=1",
+    "address": "1828 W Belmont Ave, Chicago, IL 60657, United States",
+    "website": "https://www.thehouse15.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:37 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Jerusalem Home Decor",
+    "url": "https://www.google.com/maps/place/Jerusalem+Home+Decor/data=!4m7!3m6!1s0x880fd2d2b4af8c8b:0x317f963bf08be6d3!8m2!3d41.8959404!4d-87.6670659!16s%2Fg%2F1tr7j_1y!19sChIJi4yvtNLSD4gR0-aL8DuWfzE?authuser=0&hl=en&rclk=1",
+    "address": "1559 W Chicago Ave, Chicago, IL 60642, United States",
+    "website": "Not found",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:44 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Five Elements Home",
+    "url": "https://www.google.com/maps/place/Five+Elements+Home/data=!4m7!3m6!1s0x880fd2e4359ee88b:0x643d1f6690d8f587!8m2!3d41.977369!4d-87.668097!16s%2Fg%2F11cn0vr667!19sChIJi-ieNeTSD4gRh_XYkGYfPWQ?authuser=0&hl=en&rclk=1",
+    "address": "5239 N Clark St, Chicago, IL 60640, United States",
+    "website": "http://www.fiveelementshome.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:48 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "N E Y B I R",
+    "url": "https://www.google.com/maps/place/N+E+Y+B+I+R/data=!4m7!3m6!1s0x880e2d4ea4965b0f:0xa39a5211afefd3fc!8m2!3d41.8907005!4d-87.6723568!16s%2Fg%2F11cmnrc52z!19sChIJD1uWpE4tDogR_NPvrxFSmqM?authuser=0&hl=en&rclk=1",
+    "address": "1801 W Grand Ave, Chicago, IL 60622, United States",
+    "website": "http://www.neybir.com/",
+    "email": "hello@neybir.com",
+    "scrapedAt": "2026-08-19 14:04:54 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Kneen & Co",
+    "url": "https://www.google.com/maps/place/Kneen+%26+Co/data=!4m7!3m6!1s0x880fa0dbd28e14e7:0x8f99a3d6650ed596!8m2!3d41.900539!4d-87.624593!16s%2Fg%2F1260bf1_k!19sChIJ5xSO0tugD4gRltUOZdajmY8?authuser=0&hl=en&rclk=1",
+    "address": "980 N. Michigan Ave. Suite 650 6th Floor Enter 980 building on corner of Michigan & Oak Take escalator up to, Security Desk, Chicago, IL 60611, United States",
+    "website": "http://www.kneenandco.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:04:58 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "P.O.S.H.",
+    "url": "https://www.google.com/maps/place/P.O.S.H./data=!4m7!3m6!1s0x880e2cad79ad9cc7:0xb85e2e6e15bba10!8m2!3d41.8928767!4d-87.6279109!16s%2Fg%2F1tfwkyqp!19sChIJx5ytea0sDogRELpb4ebihQs?authuser=0&hl=en&rclk=1",
+    "address": "613 N State St, Chicago, IL 60654, United States",
+    "website": "http://www.poshchicago.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:05:03 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "HomeGoods",
+    "url": "https://www.google.com/maps/place/HomeGoods/data=!4m7!3m6!1s0x880fd288cc134bad:0x6305ea318f865bbc!8m2!3d41.9313859!4d-87.685746!16s%2Fg%2F1tdkmtzr!19sChIJrUsTzIjSD4gRvFuGjzHqBWM?authuser=0&hl=en&rclk=1",
+    "address": "2731 N Elston Ave, Chicago, IL 60647, United States",
+    "website": "http://www.homegoods.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:05:09 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Circa Modern",
+    "url": "https://www.google.com/maps/place/Circa+Modern/data=!4m7!3m6!1s0x880fd2d1e10bebe7:0x196f8fe5ed394a63!8m2!3d41.8573366!4d-87.636004!16s%2Fg%2F1hhhh3_6m!19sChIJ5-sL4dHSD4gRY0o57eWPbxk?authuser=0&hl=en&rclk=1",
+    "address": "329 W 18th St, Chicago, IL 60616, United States",
+    "website": "https://www.circamodern.com/",
+    "email": "contact@circamodern.com",
+    "scrapedAt": "2026-08-19 14:05:13 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "The Golden Triangle",
+    "url": "https://www.google.com/maps/place/The+Golden+Triangle/data=!4m7!3m6!1s0x880e2cb104871857:0xe64467c8e602d08!8m2!3d41.8906008!4d-87.6783861!16s%2Fg%2F1tjs5j6x!19sChIJVxiHBLEsDogRCC1gjnxGZA4?authuser=0&hl=en&rclk=1",
+    "address": "2035 W Grand Ave, Chicago, IL 60612, United States",
+    "website": "http://www.goldentriangle.biz/",
+    "email": "tsasin@goldentriangle.biz, info@goldentriangle.biz",
+    "scrapedAt": "2026-08-19 14:05:17 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Crate & Barrel",
+    "url": "https://www.google.com/maps/place/Crate+%26+Barrel/data=!4m7!3m6!1s0x880fd323821c2a3d:0x248720afef305477!8m2!3d41.9111635!4d-87.65033!16s%2Fg%2F1tfjg3_r!19sChIJPSocgiPTD4gRd1Qw768ghyQ?authuser=0&hl=en&rclk=1",
+    "address": "850 W North Ave, Chicago, IL 60642, United States",
+    "website": "https://www.crateandbarrel.com/stores/north-and-clybourn/str115?utm_source=gmb&utm_medium=organic_search",
+    "email": "mediainquiries@crateandbarrel.com",
+    "scrapedAt": "2026-08-19 14:05:29 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "South Loop Loft",
+    "url": "https://www.google.com/maps/place/South+Loop+Loft/data=!4m7!3m6!1s0x880e2d48bacdd007:0xe162899152a2036e!8m2!3d41.8942!4d-87.651822!16s%2Fg%2F11cjpxt_l2!19sChIJB9DNukgtDogRbgOiUpGJYuE?authuser=0&hl=en&rclk=1",
+    "address": "685 N Milwaukee Ave, Chicago, IL 60642, United States",
+    "website": "https://thesouthlooploft.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:05:35 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "RH Chicago | The Gallery at the Three Arts Club",
+    "url": "https://www.google.com/maps/place/RH+Chicago+%7C+The+Gallery+at+the+Three+Arts+Club/data=!4m7!3m6!1s0x880fd3456f4ca379:0x69cec26f05f68bb0!8m2!3d41.9059333!4d-87.6303634!16s%2Fg%2F11clvvrd_b!19sChIJeaNMb0XTD4gRsIv2BW_Czmk?authuser=0&hl=en&rclk=1",
+    "address": "1300 N Dearborn St, Chicago, IL 60610, United States",
+    "website": "https://rh.com/chicago",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:05:38 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Neighborly",
+    "url": "https://www.google.com/maps/place/Neighborly/data=!4m7!3m6!1s0x880fd39e191f1f61:0x5b69885594a9a6e4!8m2!3d41.9096839!4d-87.6765874!16s%2Fg%2F11tn5f5bhk!19sChIJYR8fGZ7TD4gR5KaplFWIaVs?authuser=0&hl=en&rclk=1",
+    "address": "1554 N Milwaukee Ave, Chicago, IL 60622, United States",
+    "website": "http://neighborlyshop.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:05:43 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Judy Maxwell Home",
+    "url": "https://www.google.com/maps/place/Judy+Maxwell+Home/data=!4m7!3m6!1s0x880fd3466112aa3d:0x3c9329990c559506!8m2!3d41.9071786!4d-87.6342792!16s%2Fg%2F1yg4fj895!19sChIJPaoSYUbTD4gRBpVVDJkpkzw?authuser=0&hl=en&rclk=1",
+    "address": "1349 N Wells St, Chicago, IL 60610, United States",
+    "website": "http://judymaxwellhome.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:05:49 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "My Modern Oasis",
+    "url": "https://www.google.com/maps/place/My+Modern+Oasis/data=!4m7!3m6!1s0x880fd1bda585217d:0x4fc3cb014bddf96e!8m2!3d41.9105993!4d-87.688039!16s%2Fg%2F11pzbnpdkc!19sChIJfSGFpb3RD4gRbvndSwHLw08?authuser=0&hl=en&rclk=1",
+    "address": "2418 W North Ave, Chicago, IL 60647, United States",
+    "website": "http://mymodernoasis.com/",
+    "email": "arthurbraud@mymodernoasis.com",
+    "scrapedAt": "2026-08-19 14:05:56 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "World Market",
+    "url": "https://www.google.com/maps/place/World+Market/data=!4m7!3m6!1s0x880fd323e21624a3:0x3c1f705089a23852!8m2!3d41.9115154!4d-87.6527157!16s%2Fg%2F1td1qgxy!19sChIJoyQW4iPTD4gRUjiiiVBwHzw?authuser=0&hl=en&rclk=1",
+    "address": "1623 N Sheffield Ave, Chicago, IL 60614, United States",
+    "website": "https://www.worldmarket.com/stores/store?id=CP76",
+    "email": "customercare@worldmarket.com",
+    "scrapedAt": "2026-08-19 14:06:02 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Beyond Grandma's House Vintage LLC",
+    "url": "https://www.google.com/maps/place/Beyond+Grandma%27s+House+Vintage+LLC/data=!4m7!3m6!1s0x880fcdb5156c2d3b:0xf06fd28ea8e98c2a!8m2!3d41.9233871!4d-87.727784!16s%2Fg%2F11thk3zp6k!19sChIJOy1sFbXND4gRKozpqI7Sb_A?authuser=0&hl=en&rclk=1",
+    "address": "2321 N Keystone Ave Rear Garden, Chicago, IL 60639, United States",
+    "website": "http://beyondgrandmashouse.com/",
+    "email": "Not found",
+    "scrapedAt": "2026-08-19 14:06:08 IST"
+  },
+  {
+    "city": "Chicago",
+    "category": "Home Decor",
+    "name": "Nadeau Furniture With a Soul",
+    "url": "https://www.google.com/maps/place/Nadeau+Furniture+With+a+Soul/data=!4m7!3m6!1s0x880fd23c6536da69:0x5912dc9dea95c08d!8m2!3d41.9625862!4d-87.6737396!16s%2Fg%2F1tf76366!19sChIJado2ZTzSD4gRjcCV6p3cElk?authuser=0&hl=en&rclk=1",
+    "address": "4433 N Ravenswood Ave, Chicago, IL 60640, United States",
+    "website": "http://www.nadeauchicago.com/",
+    "email": "chicago@furniturewithasoul.com",
+    "scrapedAt": "2026-08-19 14:06:17 IST"
   }
 ]

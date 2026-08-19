@@ -1,13 +1,13 @@
 {
-  "currentIndex": 39,
+  "currentIndex": 42,
   "lastCompletedCombo": {
     "city": "Chicago",
-    "category": "Sports & Fitness"
+    "category": "Home Decor"
   },
-  "lastRunAt": "2026-08-19T06:36:28.924Z",
+  "lastRunAt": "2026-08-19T08:36:18.131Z",
   "totalCombos": 1717,
-  "completedCombos": 39,
-  "totalStoresCollected": 767,
+  "completedCombos": 42,
+  "totalStoresCollected": 837,
   "completedCombosList": [
     "New York:::Fashion & Apparel",
     "New York:::Jewelry",
@@ -47,6 +47,9 @@
     "Chicago:::Jewelry",
     "Chicago:::Beauty & Cosmetics",
     "Chicago:::Health & Wellness",
-    "Chicago:::Sports & Fitness"
+    "Chicago:::Sports & Fitness",
+    "Chicago:::Electronics",
+    "Chicago:::Home & Furniture",
+    "Chicago:::Home Decor"
   ]
 }
