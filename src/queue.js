@@ -8,6 +8,7 @@ class QueueManager {
     this.categories = [];
     this.cities = [];
     this.queue = [];
+    this.completedCombosSet = new Set();
     this.state = {
       currentIndex: 0,
       lastCompletedCombo: null,
@@ -15,8 +16,38 @@ class QueueManager {
       totalCombos: 0,
       completedCombos: 0,
       totalStoresCollected: 0,
+      completedCombosList: [],
     };
     this.init();
+  }
+
+  /**
+   * Generates a normalized unique key for a city + category combination
+   */
+  static getComboKey(city, category) {
+    return `${String(city || '').trim()}:::${String(category || '').trim()}`;
+  }
+
+  /**
+   * Checks if a combination has already been completed
+   */
+  isComboCompleted(city, category) {
+    const key = QueueManager.getComboKey(city, category);
+    return this.completedCombosSet.has(key);
+  }
+
+  /**
+   * Marks a combination as completed
+   */
+  markComboCompleted(city, category) {
+    const key = QueueManager.getComboKey(city, category);
+    if (!this.completedCombosSet.has(key)) {
+      this.completedCombosSet.add(key);
+      if (!Array.isArray(this.state.completedCombosList)) {
+        this.state.completedCombosList = [];
+      }
+      this.state.completedCombosList.push(key);
+    }
   }
 
   /**
@@ -124,6 +155,23 @@ class QueueManager {
           ...parsed,
           totalCombos: this.queue.length,
         };
+
+        this.completedCombosSet = new Set();
+        if (Array.isArray(this.state.completedCombosList) && this.state.completedCombosList.length > 0) {
+          for (const key of this.state.completedCombosList) {
+            this.completedCombosSet.add(key);
+          }
+        } else if (typeof this.state.currentIndex === 'number' && this.state.currentIndex > 0) {
+          // Backfill completed combinations from previous linear cursor
+          const prevCombos = this.queue.slice(0, this.state.currentIndex);
+          this.state.completedCombosList = [];
+          for (const c of prevCombos) {
+            const key = QueueManager.getComboKey(c.city, c.category);
+            this.completedCombosSet.add(key);
+            this.state.completedCombosList.push(key);
+          }
+        }
+
         // Normalize currentIndex if out of bounds
         if (typeof this.state.currentIndex !== 'number' || this.state.currentIndex < 0) {
           this.state.currentIndex = 0;
@@ -143,53 +191,105 @@ class QueueManager {
       fs.mkdirSync(dir, { recursive: true });
     }
     const statePath = path.resolve(dir, this.config.stateFile);
+    this.state.completedCombos = this.completedCombosSet.size;
+    this.state.completedCombosList = Array.from(this.completedCombosSet);
     fs.writeFileSync(statePath, JSON.stringify(this.state, null, 2), 'utf8');
   }
 
   /**
-   * Get next N combinations to process starting from current cursor
+   * Get next N combinations to process, skipping any already completed combos
    */
   getNextBatch(count = this.config.combosPerRun) {
-    if (this.state.currentIndex >= this.queue.length) {
-      return [];
+    const pending = [];
+    for (let i = 0; i < this.queue.length; i++) {
+      const combo = this.queue[i];
+      if (!this.isComboCompleted(combo.city, combo.category)) {
+        pending.push(combo);
+        if (pending.length >= count) {
+          break;
+        }
+      }
     }
-    const start = this.state.currentIndex;
-    const end = Math.min(start + count, this.queue.length);
-    return this.queue.slice(start, end);
+    return pending;
   }
 
   /**
-   * Advance the cursor after successfully processing combos
+   * Advance the cursor and record completed combinations
    */
   advance(completedCount, storesCollectedCount = 0, lastCombo = null) {
-    if (completedCount <= 0) return this.state;
+    if (completedCount <= 0 && !lastCombo) return this.state;
 
-    const newIndex = Math.min(this.state.currentIndex + completedCount, this.queue.length);
-    const completedCombo = lastCombo || (newIndex > 0 ? this.queue[newIndex - 1] : null);
+    if (lastCombo) {
+      this.markComboCompleted(lastCombo.city, lastCombo.category);
+      this.state.lastCompletedCombo = {
+        city: lastCombo.city,
+        category: lastCombo.category,
+      };
 
-    this.state.currentIndex = newIndex;
-    this.state.completedCombos = (this.state.completedCombos || 0) + completedCount;
+      // If completedCount > 1, ensure the preceding uncompleted combos in the batch are also marked
+      let marked = 1;
+      for (let i = 0; i < this.queue.length && marked < completedCount; i++) {
+        const c = this.queue[i];
+        if (!this.isComboCompleted(c.city, c.category)) {
+          this.markComboCompleted(c.city, c.category);
+          marked++;
+        }
+      }
+    } else {
+      // Mark next completedCount uncompleted combos
+      let marked = 0;
+      for (let i = 0; i < this.queue.length && marked < completedCount; i++) {
+        const c = this.queue[i];
+        if (!this.isComboCompleted(c.city, c.category)) {
+          this.markComboCompleted(c.city, c.category);
+          this.state.lastCompletedCombo = { city: c.city, category: c.category };
+          marked++;
+        }
+      }
+    }
+
+    // Find the next uncompleted index in queue to update currentIndex
+    let nextIndex = this.queue.length;
+    for (let i = 0; i < this.queue.length; i++) {
+      const c = this.queue[i];
+      if (!this.isComboCompleted(c.city, c.category)) {
+        nextIndex = i;
+        break;
+      }
+    }
+
+    this.state.currentIndex = nextIndex;
+    this.state.completedCombos = this.completedCombosSet.size;
     this.state.totalStoresCollected = (this.state.totalStoresCollected || 0) + storesCollectedCount;
     this.state.lastRunAt = new Date().toISOString();
-
-    if (completedCombo) {
-      this.state.lastCompletedCombo = {
-        city: completedCombo.city,
-        category: completedCombo.category,
-      };
-    }
 
     this.saveState();
     return this.state;
   }
 
   /**
-   * Reset cursor to specific index
+   * Reset cursor to specific index and reset completed combinations
    */
   reset(index = 0) {
-    this.state.currentIndex = Math.max(0, Math.min(index, this.queue.length));
-    this.state.lastCompletedCombo = this.state.currentIndex > 0 ? this.queue[this.state.currentIndex - 1] : null;
-    this.state.completedCombos = this.state.currentIndex;
+    const safeIndex = Math.max(0, Math.min(index, this.queue.length));
+    this.state.currentIndex = safeIndex;
+    this.completedCombosSet.clear();
+    this.state.completedCombosList = [];
+
+    if (safeIndex > 0) {
+      const prevCombos = this.queue.slice(0, safeIndex);
+      for (const c of prevCombos) {
+        const key = QueueManager.getComboKey(c.city, c.category);
+        this.completedCombosSet.add(key);
+        this.state.completedCombosList.push(key);
+      }
+      const last = prevCombos[prevCombos.length - 1];
+      this.state.lastCompletedCombo = { city: last.city, category: last.category };
+    } else {
+      this.state.lastCompletedCombo = null;
+    }
+
+    this.state.completedCombos = this.completedCombosSet.size;
     this.saveState();
     return this.state;
   }
@@ -198,21 +298,23 @@ class QueueManager {
    * Get comprehensive status
    */
   getStatus() {
-    const remaining = Math.max(0, this.queue.length - this.state.currentIndex);
-    const percent = this.queue.length > 0 ? ((this.state.currentIndex / this.queue.length) * 100).toFixed(2) : '0.00';
-    const nextCombo = this.state.currentIndex < this.queue.length ? this.queue[this.state.currentIndex] : null;
+    const pendingCombos = this.queue.filter((c) => !this.isComboCompleted(c.city, c.category));
+    const remaining = pendingCombos.length;
+    const completed = this.completedCombosSet.size;
+    const percent = this.queue.length > 0 ? ((completed / this.queue.length) * 100).toFixed(2) : '0.00';
+    const nextCombo = pendingCombos.length > 0 ? pendingCombos[0] : null;
 
     return {
       currentIndex: this.state.currentIndex,
       totalCombos: this.queue.length,
       remainingCombos: remaining,
-      completedCombos: this.state.completedCombos || this.state.currentIndex,
+      completedCombos: completed,
       progressPercent: `${percent}%`,
       lastCompletedCombo: this.state.lastCompletedCombo,
       lastRunAt: this.state.lastRunAt,
       totalStoresCollected: this.state.totalStoresCollected || 0,
       nextCombo: nextCombo ? { city: nextCombo.city, category: nextCombo.category, url: nextCombo.url } : null,
-      isFinished: this.state.currentIndex >= this.queue.length,
+      isFinished: remaining === 0,
     };
   }
 }

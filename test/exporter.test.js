@@ -108,4 +108,88 @@ describe('Exporter', () => {
     const cumulativeCsvLines = fs.readFileSync(info1.cumulativeCsvPath, 'utf8').trim().split('\n');
     assert.strictEqual(cumulativeCsvLines.length, 3); // 1 header + 2 rows
   });
+
+  it('deduplicates stores and prevents duplicate entries in cumulative JSON and CSV', () => {
+    const exporter = new Exporter({
+      outputDir: testOutputDir,
+    });
+
+    const store = {
+      city: 'Los Angeles',
+      category: 'Jewelry',
+      name: 'Artisan LA Jewelry',
+      url: 'https://maps.google.com/place/artisan-la',
+      address: '1856 N Vermont Ave, Los Angeles, CA',
+      website: 'http://www.artisanla.com/',
+      email: 'artisanlajewelry@gmail.com',
+      scrapedAt: '2026-08-18T06:30:13.586Z',
+    };
+
+    // First export
+    exporter.exportResults([store], { combo: 1 }, { appendCumulative: true });
+
+    // Duplicate export of the EXACT same store (e.g. batch run summary or duplicate combo)
+    exporter.exportResults([store], { combo: 1, batch: true }, { appendCumulative: true });
+
+    const cumulativeJson = JSON.parse(fs.readFileSync(path.resolve(testOutputDir, 'results.json'), 'utf8'));
+    assert.strictEqual(cumulativeJson.length, 1, 'Cumulative JSON should contain only 1 store (no duplicate)');
+
+    const cumulativeCsvLines = fs.readFileSync(path.resolve(testOutputDir, 'results.csv'), 'utf8').trim().split('\n');
+    assert.strictEqual(cumulativeCsvLines.length, 2, 'Cumulative CSV should contain 1 header + 1 unique row');
+  });
+
+  it('supports appendCumulative: false for batch run summary without modifying cumulative files', () => {
+    const exporter = new Exporter({
+      outputDir: testOutputDir,
+    });
+
+    const store1 = {
+      city: 'Chicago',
+      category: 'Jewelry',
+      name: 'Chicago Gems',
+      url: 'https://maps.google.com/place/chicago-gems',
+      address: '100 Michigan Ave, Chicago, IL',
+      website: 'https://chicagogems.com',
+      email: 'info@chicagogems.com',
+      scrapedAt: '2026-08-18T08:00:00.000Z',
+    };
+
+    // Incremental export
+    exporter.exportResults([store1], { incremental: true }, { appendCumulative: true });
+
+    const store2 = {
+      city: 'Chicago',
+      category: 'Electronics',
+      name: 'Chicago Tech',
+      url: 'https://maps.google.com/place/chicago-tech',
+      address: '200 State St, Chicago, IL',
+      website: 'https://chicagotech.com',
+      email: 'info@chicagotech.com',
+      scrapedAt: '2026-08-18T08:10:00.000Z',
+    };
+
+    // Summary export with appendCumulative: false
+    const summaryInfo = exporter.exportResults([store1, store2], { summary: true }, { appendCumulative: false });
+    assert.ok(fs.existsSync(summaryInfo.runJsonPath));
+    assert.ok(fs.existsSync(summaryInfo.runCsvPath));
+
+    // Cumulative JSON should still only have the store exported with appendCumulative: true
+    const cumulativeJson = JSON.parse(fs.readFileSync(path.resolve(testOutputDir, 'results.json'), 'utf8'));
+    assert.strictEqual(cumulativeJson.length, 1);
+  });
+
+  it('correctly formats timestamps in Indian Standard Time (IST, UTC+5:30)', () => {
+    // 2026-08-18 12:30:00 UTC corresponds to 2026-08-18 18:00:00 IST
+    const istTime = Exporter.formatIST('2026-08-18T12:30:00.000Z');
+    assert.strictEqual(istTime, '2026-08-18 18:00:00 IST');
+
+    // Normalizing a store formats its scrapedAt as IST
+    const normalized = Exporter.normalizeStore({
+      city: 'Mumbai',
+      category: 'Electronics',
+      name: 'Croma',
+      scrapedAt: '2026-08-18T04:00:00.000Z',
+    });
+    assert.strictEqual(normalized.scrapedAt, '2026-08-18 09:30:00 IST');
+  });
 });

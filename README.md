@@ -81,6 +81,14 @@ npm run scrape
 node bin/mapscraper.js run --combos 3 --target 25
 ```
 
+log 
+
+tail -f /Users/USER_NAME/Sites/mapscraper/cron.log
+
+auto run
+
+0 */2 * * * cd /Users/USER_NAME/Sites/mapscraper && /Users/USER_NAME/.nvm/versions/node/v22.23.1/bin/node bin/mapscraper.js run --combos 3 --target 25 >> /Users/USER_NAME/Sites/mapscraper/cron.log 2>&1
+
 ### 2. Inspect Queue Progress & Status
 ```bash
 npm run status

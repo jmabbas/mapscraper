@@ -88,4 +88,50 @@ describe('QueueManager', () => {
     qmReloaded.reset(0);
     assert.strictEqual(qmReloaded.state.currentIndex, 0);
   });
+
+  it('guarantees each combination runs only once and skips completed combos', () => {
+    const qm = new QueueManager({
+      dataDir: testDataDir,
+      stateFile: testStateFile,
+    });
+
+    // Initial batch of 2
+    const batch1 = qm.getNextBatch(2);
+    assert.strictEqual(batch1.length, 2);
+    assert.strictEqual(batch1[0].city, 'New York');
+    assert.strictEqual(batch1[0].category, 'Fashion & Apparel');
+    assert.strictEqual(batch1[1].city, 'New York');
+    assert.strictEqual(batch1[1].category, 'Jewelry');
+
+    // Mark the first combo as completed
+    qm.advance(1, 10, batch1[0]);
+    assert.strictEqual(qm.isComboCompleted('New York', 'Fashion & Apparel'), true);
+    assert.strictEqual(qm.isComboCompleted('New York', 'Jewelry'), false);
+
+    // Next batch should NOT include New York Fashion & Apparel
+    const batch2 = qm.getNextBatch(2);
+    assert.strictEqual(batch2.length, 2);
+    assert.strictEqual(batch2[0].city, 'New York');
+    assert.strictEqual(batch2[0].category, 'Jewelry');
+    assert.strictEqual(batch2[1].city, 'New York');
+    assert.strictEqual(batch2[1].category, 'Beauty & Cosmetics');
+
+    // Complete Jewelry
+    qm.advance(1, 12, batch2[0]);
+    assert.strictEqual(qm.isComboCompleted('New York', 'Jewelry'), true);
+
+    // Verify persistence of completed combos
+    const qm2 = new QueueManager({
+      dataDir: testDataDir,
+      stateFile: testStateFile,
+    });
+    assert.strictEqual(qm2.isComboCompleted('New York', 'Fashion & Apparel'), true);
+    assert.strictEqual(qm2.isComboCompleted('New York', 'Jewelry'), true);
+    assert.strictEqual(qm2.isComboCompleted('New York', 'Beauty & Cosmetics'), false);
+
+    const batch3 = qm2.getNextBatch(1);
+    assert.strictEqual(batch3.length, 1);
+    assert.strictEqual(batch3[0].city, 'New York');
+    assert.strictEqual(batch3[0].category, 'Beauty & Cosmetics');
+  });
 });

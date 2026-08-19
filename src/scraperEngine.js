@@ -123,7 +123,7 @@ class ScraperEngine {
               address: details.address || 'Not found',
               website: details.website || 'Not found',
               email,
-              scrapedAt: new Date().toISOString(),
+              scrapedAt: Exporter.formatIST(),
             };
 
             collectedStores.push(storeRecord);
@@ -198,6 +198,13 @@ class ScraperEngine {
         }
 
         const combo = combos[i];
+
+        // Safeguard: Check if this combo has already been completed
+        if (this.queueManager.isComboCompleted(combo.city, combo.category)) {
+          console.log(`[SKIP] Combo "${combo.category}" in "${combo.city}" has already been processed. Skipping.`);
+          continue;
+        }
+
         let result = await this.processCombo(combo, targetPerCombo, runDeadline);
 
         // If an unexpected error occurred (e.g. ProtocolError or crash) and not blocked, retry once with clean browser
@@ -219,14 +226,18 @@ class ScraperEngine {
         allStores.push(...result.stores);
         completedCombosCount++;
 
-        // Advance cursor incrementally after each successful combo
+        // Advance cursor incrementally and mark combo completed
         this.queueManager.advance(1, result.stores.length, combo);
 
-        // Incrementally export results so data is safely on disk
+        // Incrementally export results so data is safely written to disk and cumulative files
         if (result.stores.length > 0) {
-          this.exporter.exportResults(result.stores, {
-            incrementalCombo: { city: combo.city, category: combo.category },
-          });
+          this.exporter.exportResults(
+            result.stores,
+            {
+              incrementalCombo: { city: combo.city, category: combo.category },
+            },
+            { appendCumulative: true, createRunFile: true }
+          );
         }
 
         // Pause between combos if more combos remain in this run
@@ -242,19 +253,23 @@ class ScraperEngine {
 
     const durationMs = Date.now() - startTime;
 
-    // Export run summary
+    // Export batch run summary without double-appending to cumulative results
     let exportInfo = null;
     if (allStores.length > 0) {
-      exportInfo = this.exporter.exportResults(allStores, {
-        durationMs,
-        combosAttempted: combos.length,
-        combosCompleted: completedCombosCount,
-        blocked: isBlocked,
-      });
+      exportInfo = this.exporter.exportResults(
+        allStores,
+        {
+          durationMs,
+          combosAttempted: combos.length,
+          combosCompleted: completedCombosCount,
+          blocked: isBlocked,
+        },
+        { appendCumulative: false, createRunFile: true }
+      );
       console.log(`\n======================================================`);
-      console.log(`Exported ${allStores.length} stores:`);
-      console.log(`  - Run JSON: ${exportInfo.runJsonPath}`);
-      console.log(`  - Run CSV:  ${exportInfo.runCsvPath}`);
+      console.log(`Exported ${allStores.length} stores across ${completedCombosCount} combos:`);
+      console.log(`  - Run Batch JSON: ${exportInfo.runJsonPath}`);
+      console.log(`  - Run Batch CSV:  ${exportInfo.runCsvPath}`);
       console.log(`  - Cumulative JSON: ${exportInfo.cumulativeJsonPath}`);
       console.log(`  - Cumulative CSV:  ${exportInfo.cumulativeCsvPath}`);
       console.log(`======================================================\n`);
@@ -290,11 +305,15 @@ class ScraperEngine {
 
       let exportInfo = null;
       if (result.stores.length > 0) {
-        exportInfo = this.exporter.exportResults(result.stores, {
-          durationMs,
-          singleCombo: { city, category },
-          blocked: result.blocked,
-        });
+        exportInfo = this.exporter.exportResults(
+          result.stores,
+          {
+            durationMs,
+            singleCombo: { city, category },
+            blocked: result.blocked,
+          },
+          { appendCumulative: true, createRunFile: true }
+        );
       }
 
       return {
